@@ -1,0 +1,23 @@
+CREATE TABLE cmcaifu_default.`transactions_transaction` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `order_id` bigint(20) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `user_name` varchar(30) DEFAULT '',
+  `related_user_id` int(11) DEFAULT NULL,
+  `related_user_name` varchar(30) DEFAULT '',
+  `amount` bigint(20) NOT NULL,
+  `account_balance` bigint(20) DEFAULT NULL,
+  `type` int(11) NOT NULL,
+  `trade_channel` int(10) unsigned NOT NULL,
+  `status` smallint(5) unsigned NOT NULL,
+  `payment_time` datetime(6) DEFAULT NULL,
+  `is_active` tinyint(1) DEFAULT '1',
+  `remark` varchar(1000) DEFAULT '',
+  `created_time` datetime(6) NOT NULL,
+  `updated_time` datetime(6) NOT NULL,
+  `payment_service_id` int(11) NOT NULL,
+  `related_business_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_order_id` (`order_id`) USING BTREE,
+  KEY `idx_user_id` (`user_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -1,0 +1,4 @@
+-r common.txt
+django-haystack-panel
+django-rosetta
+django-cors-headers

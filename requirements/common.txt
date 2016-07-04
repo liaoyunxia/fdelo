@@ -1,0 +1,8 @@
+-r code.txt
+pip
+mysqlclient
+django-rest-swagger
+pysolr
+Pillow
+django-apptemplates
+django-suit
