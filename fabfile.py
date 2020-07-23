@@ -60,7 +60,7 @@ env.colorize_errors = True
 
 
 @task
-def prod(branch='master'):
+def prod(branch='main'):
     """【生产环境】"""
     # env.key_filename = '~/key/{.organization}-aws.pem'.format(env)
     env.password = 'Abcd1234'
@@ -434,7 +434,7 @@ def local_runtest(testInfo=None):
 def local_runserver(port='8000', migrate='yes', ssl=''):
     """可选参数<端口号><是否migrate> 例: local_runserver:8001,''"""
 #     branch = local('git status', True).split('\n')[0].replace('On branch ', '')
-#     if branch in ['develop', 'master']:
+#     if branch in ['develop', 'main']:
 #         puts('不要在 {} 分支修改代码'.format(yellow(branch)))
 #         return
 #     if not os.path.exists('/tmp/mysql.sock'):
@@ -489,7 +489,7 @@ def commit_and_sync(comment=None):
     """git commit and sync"""
     output_list = local('git status', True).split('\n')
     branch = output_list[0].replace('On branch ', '')
-    if branch in ['develop', 'master']:
+    if branch in ['develop', 'main']:
         puts('不允许在 {} 分支 用 {} 命令直接操作'.format(yellow(branch), get_function_name()))
     elif 'nothing to commit' in output_list[-1]:
         puts('{} 分支没有变动, 不需要提交'.format(yellow(branch)))
@@ -515,7 +515,7 @@ def update_from_develop():
     """从 develop 更新到当前分支"""
     output_list = local('git status', True).split('\n')
     branch = output_list[0].replace('On branch ', '')
-    if branch in ['develop', 'master']:
+    if branch in ['develop', 'main']:
         puts('不允许在 {} 分支 用 {} 命令直接操作'.format(yellow(branch), get_function_name()))
     elif 'nothing to commit' in output_list[-1]:
         local_proxy('git pull origin develop')
@@ -530,7 +530,7 @@ def update_to_develop():
     """从当前分支更新到 develop """
     output_list = local('git status', True).split('\n')
     branch = output_list[0].replace('On branch ', '')
-    if branch in ['develop', 'master']:
+    if branch in ['develop', 'main']:
         puts('不允许在 {} 分支 用 {} 命令直接操作'.format(yellow(branch), get_function_name()))
     elif 'nothing to commit' in output_list[-1]:
         confirm = raw_input('是否已经update_from_develop? [y/N]: '.format(yellow(branch)))

@@ -35,7 +35,7 @@ def get_user_id(pk):
     return pk & 0xFFFFFFFF
 
 
-def db_master(user_id=None):
+def db_main(user_id=None):
     """
     需要保证传入的user_id都是int
     """
@@ -48,12 +48,12 @@ def db_master(user_id=None):
             return 'db_{}'.format(user_id % settings.SHARD_COUNT)
 
 
-def db_slave(user_id=None):
+def db_subordinate(user_id=None):
     suffix = ''
-    return '{}{}'.format(db_master(user_id), suffix)  # replica_
+    return '{}{}'.format(db_main(user_id), suffix)  # replica_
 
 
-def redis_master(user_id=None):
+def redis_main(user_id=None):
     if not user_id:
         return 0
     else:
