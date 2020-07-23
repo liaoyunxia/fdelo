@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import date
 from django.utils.translation import ugettext_lazy as _
-from .utils import generate_shard_id, get_user_id, db_master
+from .utils import generate_shard_id, get_user_id, db_main
 GENDER_CHOICES = (('m', _('男')), ('f', _('女')))
 BIR_CHOICES = {"浙江": ["杭州", "宁波"], "湖北": ["武汉", "黄石", '荆门']}
 
@@ -86,7 +86,7 @@ class ShardModel(OwnerModel):
         self.full_clean()
         if self.pk is None:
             self.pk = generate_shard_id(self.user_id)
-        super(ShardModel, self).save(using=db_master(self.user_id), *args, **kwargs)
+        super(ShardModel, self).save(using=db_main(self.user_id), *args, **kwargs)
 
 
 class ShardLCModel(OwnerModel):
@@ -101,8 +101,8 @@ class ShardLCModel(OwnerModel):
         if self.pk is None:  # Create
             self.pk = generate_shard_id(self.user_id)
             self.is_origin = True
-        super(ShardLCModel, self).save(using=db_master(self.user_id), *args, **kwargs)  # 保存第一份.
+        super(ShardLCModel, self).save(using=db_main(self.user_id), *args, **kwargs)  # 保存第一份.
         card_user_id = get_user_id(self.card_id)
-        if db_master(card_user_id) != db_master(self.user_id):  # 保存第二份.
+        if db_main(card_user_id) != db_main(self.user_id):  # 保存第二份.
             self.is_origin = False
-            super(ShardLCModel, self).save(using=db_master(card_user_id), *args, **kwargs)
+            super(ShardLCModel, self).save(using=db_main(card_user_id), *args, **kwargs)

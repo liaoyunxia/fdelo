@@ -9,7 +9,7 @@ from py_mysql import MysqlClient
 from sms_ytx_sdk import sendTemplateSms
 
 
-def redis_master(user_id=None):
+def redis_main(user_id=None):
     if not user_id:
         return 0
     else:
@@ -43,7 +43,7 @@ if __name__ == '__main__':
         queryset = redis_client.rpop('message_queue_key')
         if queryset:
             queryset = eval(queryset)
-            user_key = 'user_message:{}'.format(redis_master(queryset['user_id']))
+            user_key = 'user_message:{}'.format(redis_main(queryset['user_id']))
             message_list = []
             if redis_client.hexists(user_key, 'data:{}'.format(queryset['user_id'])):
                     message_list = eval(redis_client.hget(user_key, 'data:{}'.format(queryset['user_id'])))
